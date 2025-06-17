@@ -5,14 +5,25 @@ import express from 'express';
 const app = express();
 
 
+// routes 
+import {authRouter} from '../src/routes/auth.routes'
+
+//middleware to parse json
+app.use(express.json())
+//route starter middleware
+app.use('/auth',authRouter) 
+
+//PORT declaration 
 const PORT = process.env.PORT || 8000
 
-//testing  route 
+//testing the route 
 app.get('/',(req,res)=>{
-    res.send('Hello from the backend')
+    res.send('Hello from the backend. Today has been a hard day ')
 })
 
-//listening to server
 app.listen(PORT,()=>{
     console.log(`Server is running on Port: ${PORT}`)
 })
+
+//forces the server to keep running and not stop so abruptly
+setInterval(() => {}, 1000);
