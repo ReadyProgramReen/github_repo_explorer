@@ -6,12 +6,16 @@ const app = express();
 
 
 // routes 
-import {authRouter} from '../src/routes/auth.routes'
+import {authRouter} from './routes/authRoutes'
+import {profileRoutes} from '../src/routes/profile.routes'
+
 
 //middleware to parse json
 app.use(express.json())
 //route starter middleware
-app.use('/auth',authRouter) 
+app.use('/auth',authRouter)
+app.use('/profile',profileRoutes) 
+
 
 //PORT declaration 
 const PORT = process.env.PORT || 8000
