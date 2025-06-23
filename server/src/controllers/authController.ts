@@ -5,14 +5,14 @@ import { PrismaClient } from '../generated/prisma';
 
 const prisma = new  PrismaClient();
 
-export const registerAuth:RequestHandler = async(req, res)=>{
+export const registerAuth:RequestHandler = async(req:any, res:any)=>{
     
       // get the email, password from the request body
       const { email, password } = req.body;
     
       //check if email and pass are empty
       if (!email || !password) {
-         res.status(400).json({ error: "Please provide both email and password" });
+       return  res.status(400).json({ error: "Please provide both email and password" });
       }
     
       try {
@@ -23,7 +23,7 @@ export const registerAuth:RequestHandler = async(req, res)=>{
     
         //if existinguser is true then send a message to the client informing them
         if (existingUser) {
-           res.status(400).json({ error: "You already have an account with this email" });
+          return res.status(400).json({ error: "You already have an account with this email" });
         }
     
         // waited for the hashed and salted password
@@ -39,7 +39,7 @@ export const registerAuth:RequestHandler = async(req, res)=>{
         });
     
         //inform the client side that new user was successfully created and sent user email
-         res.status(201).json({
+        return res.status(201).json({
           message: "User registered successfully",
           user: { id: newUser.id, email: newUser.email }
         });
@@ -47,7 +47,7 @@ export const registerAuth:RequestHandler = async(req, res)=>{
         //catch the error
       } catch (error) {
         console.error('Registration error:', error);
-         res.status(500).json({ error: 'Something went wrong. Please try again.' });
+        return res.status(500).json({ error: 'Something went wrong. Please try again.' });
       }
 
 }

@@ -8,6 +8,8 @@ const app = express();
 // routes 
 import {authRouter} from './routes/authRoutes'
 import {profileRoutes} from '../src/routes/profile.routes'
+import {favRouter} from './routes/favoriteRoutes'
+
 
 
 //middleware to parse json
@@ -15,6 +17,8 @@ app.use(express.json())
 //route starter middleware
 app.use('/auth',authRouter)
 app.use('/profile',profileRoutes) 
+app.use('/favorite',favRouter) 
+
 
 
 //PORT declaration 
