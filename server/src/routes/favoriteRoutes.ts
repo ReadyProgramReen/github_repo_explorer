@@ -98,3 +98,35 @@ favRouter.get("/", authenticationToken , async (req:any,res:any)=>{
         
     }
 })
+
+//Removing a favorite repo
+favRouter.delete('/:id',authenticationToken,async(req:any,res:any)=>{
+//get the fav repo id from the req.params
+const favioriteId = req.params.id;
+
+try {
+    //check if the id exist in the db
+    const favorite = await prisma.favorite.findUnique({
+        where:{id:favioriteId},
+    });
+    
+    //check that the current user owns the fav repo before deleting
+    if(!favorite || favorite.userId != req.user.userId){
+        return res.status(403).json({error:"Unauthorized or not found"});
+    }
+    
+    //delete the entry from the favorite table 
+    await prisma.favorite.delete({
+        where: {id: favioriteId},
+    })
+    
+    //responde to the client that the delete was successful
+    return res.status(200).json({message:"Favorite removed successfully"})
+    
+} catch (error) {
+    console.error('Delete favorite error:', error);
+    return res.json(500).json({error:"Something went wrong"});
+    
+}
+
+})
