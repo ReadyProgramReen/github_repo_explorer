@@ -9,6 +9,8 @@ const app = express();
 import {authRouter} from './routes/authRoutes'
 import {profileRoutes} from '../src/routes/profile.routes'
 import {favRouter} from './routes/favoriteRoutes'
+import {githubRouter} from './routes/githubRoutes'
+
 
 
 
@@ -18,6 +20,8 @@ app.use(express.json())
 app.use('/auth',authRouter)
 app.use('/profile',profileRoutes) 
 app.use('/favorite',favRouter) 
+app.use('/github',githubRouter) 
+
 
 
 
