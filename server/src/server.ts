@@ -2,7 +2,11 @@ import dotenv from "dotenv"
 dotenv.config(); //needs to be before the express 
 
 import express from 'express';
+import cors from "cors";
+
 const app = express();
+
+
 
 
 // routes 
@@ -13,6 +17,7 @@ import {githubRouter} from './routes/githubRoutes'
 
 
 
+app.use(cors());
 
 //middleware to parse json
 app.use(express.json())
