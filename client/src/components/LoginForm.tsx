@@ -1,11 +1,8 @@
 import React from 'react';
 import { useState } from "react";
 
-type LoginFormProps = {
-  onSubmit: (data: { email: string; password: string }) => void;
-};
 
-export default function  LoginForm({ onSubmit }: LoginFormProps) {
+export default function  LoginForm() {
 // email input field 
   const [email, setEmail] = useState<string>("");
 //password input field
@@ -25,17 +22,19 @@ export default function  LoginForm({ onSubmit }: LoginFormProps) {
         body: JSON.stringify({email,password})
 
     });
+
     //parse the response from the server 
+    if(response.ok){
         const data = await response.json();
         console.log("Login success:",data);
 
-    //check if the login was successful
-    if(!response.ok){
-        alert(data.error || "Login failed. Please try again.");
-        return;
+    }else{
+        //check if the login was no successful/check if the login was successful
+        const errorData = await response.json();
+        console.error("Login failed:", errorData.error || "Unknown error");
     }
+    
 
-    onSubmit({ email, password });
   };
 
   return (
