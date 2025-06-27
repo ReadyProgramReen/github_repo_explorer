@@ -1,4 +1,6 @@
 import { useState } from "react";
+import "./RegisterForm.css"
+
 
 
 export default function RegisterForm(){
@@ -49,7 +51,7 @@ export default function RegisterForm(){
 
 
     return(
-        <form onSubmit={handleSubmit} action="">
+        <form onSubmit={handleSubmit} className="register-form-container" action="">
             <h2>Registration</h2>
 
             {/* //email input field */}
@@ -70,7 +72,7 @@ export default function RegisterForm(){
              />
 
              {/* Submit button */}
-             <button type="submit" >Register</button>
+             <button type="submit"  className="register-button">Register</button>
 
         </form>
     )
