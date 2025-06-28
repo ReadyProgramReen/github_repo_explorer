@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./RegisterForm.css"
 
 
@@ -9,8 +10,10 @@ export default function RegisterForm(){
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    //When user clicks handleSubmt button
+    //gives access to navigate function
+    const navigate = useNavigate()
 
+    //When user clicks handleSubmt button
     const handleSubmit = async(e: React.FormEvent<HTMLFormElement>)=>{
         //prevent default
         e.preventDefault()
@@ -40,6 +43,9 @@ export default function RegisterForm(){
          
          //if the response is ok 
          console.log("Registration successful", data)
+
+         //navigate user to login page
+         navigate("/login")
         
          //catch error 
         } catch (error) {
@@ -73,7 +79,9 @@ export default function RegisterForm(){
 
              {/* Submit button */}
              <button type="submit" >Register</button>
-
+            
+             {/* navigate user to login */}
+            <p onClick={()=>navigate("/login")}>Already have an account? Login</p>
         </form>
     )
 }

@@ -1,13 +1,25 @@
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
 import './App.css'
+// import { useState } from 'react'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
 
 function App() {
 
+// const [showLogin,setShowLogin] = useState(true);
+
   return (
-   <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <LoginForm  />
-      <RegisterForm/>
+    <div className='app-container'>
+ 
+    <BrowserRouter>
+      <Routes>
+        <Route path= "/" element={<Navigate to ="/login"/>}/>
+        <Route path="/login" element={<LoginForm/>}/>
+        <Route path="/register" element={<RegisterForm/>}/>
+      </Routes>
+    </BrowserRouter>
+
     </div>
   )
 }

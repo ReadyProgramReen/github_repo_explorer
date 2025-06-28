@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from "react";
 import './LoginForm.css'
+import { useNavigate } from 'react-router-dom';
 
 
 export default function  LoginForm() {
@@ -8,6 +9,9 @@ export default function  LoginForm() {
   const [email, setEmail] = useState<string>("");
 //password input field
   const [password, setPassword] = useState<string>("");
+
+  //access to navihgate hook
+  const navigate = useNavigate();
 
 //when user clicks submit 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -60,11 +64,9 @@ export default function  LoginForm() {
         className="border rounded p-2"
       />
 
-      <button
-        type="submit"
-      >
-        Log In
-      </button>
+      <button type="submit"> Log In </button>
+      {/* navigate user to register */}
+      <p onClick={()=>navigate("/register")}>Don't have an account? Register</p>
     </form>
   );
 }
