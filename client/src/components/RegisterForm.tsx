@@ -72,7 +72,7 @@ export default function RegisterForm(){
              />
 
              {/* Submit button */}
-             <button type="submit"  className="register-button">Register</button>
+             <button type="submit" >Register</button>
 
         </form>
     )

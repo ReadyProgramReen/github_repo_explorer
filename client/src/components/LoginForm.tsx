@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from "react";
+import './LoginForm.css'
 
 
 export default function  LoginForm() {
@@ -38,8 +39,8 @@ export default function  LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-md mx-auto">
-      <h2 className="text-2xl font-bold text-center">Login</h2>
+    <form onSubmit={handleSubmit} className="login-form-container">
+      <h2>Login</h2>
 
       <input
         type="email"
@@ -61,7 +62,6 @@ export default function  LoginForm() {
 
       <button
         type="submit"
-        className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
       >
         Log In
       </button>
