@@ -33,6 +33,15 @@ export default function  LoginForm() {
         const data = await response.json();
         console.log("Login success:",data);
 
+     //store token in local storage 
+     localStorage.setItem("token", data.token);
+
+     //store user data in local storage
+     localStorage.setItem("user",JSON.stringify(data.user));
+
+     //redirect to the dashboard 
+     navigate("/dashboard")
+
     }else{
         //check if the login was no successful/check if the login was successful
         const errorData = await response.json();
