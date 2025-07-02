@@ -1,9 +1,100 @@
 .dashboard-container{
-    max-width: 800px;
-    margin: 2rem auto;
+    min-width: 600px;
+    margin: 0.5rem auto;
     padding: 1.5rem;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow:0 2px 4px rgba(0,0,0,0.1);
     text-align: center;
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.dashboard-title {
+  font-size: 1.7srem;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  color: #666;
+  text-decoration: none;
+}
+
+.dashboard-welcome {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: #282c34;
+  padding: 1rem 2rem;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 6rem;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar li a:hover {
+  text-decoration: underline;
+}
+
+/* Repo List Styles */
+.repo-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.5rem;
+}
+
+.repo-item {
+  background-color: #f4f4f4;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.repo-name {
+  font-weight: bold;
+  color: #333;
+}
+
+.repo-id {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.delete-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #e60000;
 }

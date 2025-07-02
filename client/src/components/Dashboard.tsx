@@ -101,10 +101,13 @@ interface Favorite{
         </nav>
 
         <div className='dashboard-container'>
-        <h1>Dashboard</h1>
-        <p>Welcome to your GitHub Repo Explorer dashboard</p>
-
-        <h1>Welcome back {user.email ? `, ${user.email.split("@")[0]}`:""}</h1>
+          <div className="dashboard-header">
+            <h1 className="dashboard-title">Dashboard</h1>
+            <p className="dashboard-subtitle">Welcome to your GitHub Repo Explorer dashboard</p>
+            <p className="dashboard-welcome">
+            Welcome back{user.email ? `, ${user.email.split("@")[0]}` : ""}
+            </p>
+        </div>
 
 
         {/* //display faviorites repos */}
@@ -113,23 +116,18 @@ interface Favorite{
         {favorites.length === 0 ? (
         <p>You have no favorites saved yet.</p>
         ) : (
-       <ul>
-  {favorites.map((repo: any, index: number) => (
-    <li key={index} style={{ 
-      border: "1px solid #ccc", 
-      borderRadius: "6px", 
-      padding: "1rem", 
-      marginBottom: "1rem", 
-      listStyle: "none"
-    }}>
-      <h3>{repo.repoName}</h3>
-      <p><strong>Repo ID:</strong> {repo.repoId}</p>
-      <p><strong>Added on:</strong> {new Date(repo.createdAt).toLocaleDateString()}</p>
-      <button 
-        onClick={() => handleRemove(repo.id)} 
-        style={{ backgroundColor: "#dc3545", color: "white", padding: "0.5rem 1rem", border: "none", borderRadius: "4px", cursor: "pointer" }}
+       <ul className='repo-list'>
+    {favorites.map((repo: any) => (
+    <li key={repo.id} className="repo-item">
+      <div>
+        <p className="repo-name">{repo.repoName}</p>
+        <p className="repo-id">{repo.repoId}</p>
+      </div>
+      <button
+        className="delete-button"
+        onClick={() => handleRemove(repo.id)}
       >
-        Remove
+        Delete
       </button>
     </li>
   ))}
