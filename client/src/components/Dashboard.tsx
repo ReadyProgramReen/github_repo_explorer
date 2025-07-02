@@ -6,7 +6,17 @@ import { Link } from 'react-router-dom';
 
 
 export default function Dashboard() {
-    const [favorites, setFavorites] = useState([])
+
+// define the shape of the favorite object 
+interface Favorite{
+    id: string,
+    repoId: string,
+    repoName: string,
+    userId: number,
+    createdAt : string,
+}
+
+    const [favorites, setFavorites] = useState<Favorite[]>([])
 
     //assess the user data 
     const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -47,6 +57,29 @@ export default function Dashboard() {
 
     },[])
 
+    //remove favorite repo from db 
+    const handleRemove = async (id: string) => {
+  const token = localStorage.getItem("token");
+
+  try {
+    const response = await fetch(`http://localhost:9000/favorite/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to remove favorite");
+    }
+
+    // Refresh favorites in UI
+    setFavorites(prev => prev.filter(repo => repo.id !== id));
+  } catch (error) {
+    console.error("Error removing favorite:", error);
+  }
+};
+
 
     //log the user out by clearing local storage 
     const handleLogout = ()=>{
@@ -80,11 +113,28 @@ export default function Dashboard() {
         {favorites.length === 0 ? (
         <p>You have no favorites saved yet.</p>
         ) : (
-        <ul>
-            {favorites.map((repo: any, index: number) => (
-            <li key={index}>{repo.repoName}</li>
-            ))}
-        </ul>
+       <ul>
+  {favorites.map((repo: any, index: number) => (
+    <li key={index} style={{ 
+      border: "1px solid #ccc", 
+      borderRadius: "6px", 
+      padding: "1rem", 
+      marginBottom: "1rem", 
+      listStyle: "none"
+    }}>
+      <h3>{repo.repoName}</h3>
+      <p><strong>Repo ID:</strong> {repo.repoId}</p>
+      <p><strong>Added on:</strong> {new Date(repo.createdAt).toLocaleDateString()}</p>
+      <button 
+        onClick={() => handleRemove(repo.id)} 
+        style={{ backgroundColor: "#dc3545", color: "white", padding: "0.5rem 1rem", border: "none", borderRadius: "4px", cursor: "pointer" }}
+      >
+        Remove
+      </button>
+    </li>
+  ))}
+</ul>
+
         )}
 
 
