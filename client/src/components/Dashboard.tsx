@@ -1,8 +1,8 @@
 import {useEffect,useState} from 'react'
- 
 import './Dashboard.css'
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
 
 
 export default function Dashboard() {
@@ -92,13 +92,7 @@ interface Favorite{
     <div>
 
         {/* navbar */}
-        <nav className='navbar'>
-        <ul>
-            <li><Link to= "/Dashboard">Dashboard</Link></li>
-            <li><Link to= "/Profile">Profile</Link></li>
-            <li><Link to= "/" onClick={handleLogout}>Logout</Link></li>
-        </ul>      
-        </nav>
+        <Navbar/>
 
         <div className='dashboard-container'>
           <div className="dashboard-header">
