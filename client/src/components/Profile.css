@@ -1,0 +1,111 @@
+.profile-container{
+    min-width: 600px;
+    height: 80vh;
+    margin: 0.5rem auto;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow:0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f0f4f8;
+    border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+
+.profile-text h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.profile-text p{
+    font-size: 1.1rem;
+    color: #555;
+    text-decoration: none;
+    cursor: none;
+}
+
+.profile-avatar{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+/* fav- repo */
+
+
+ .profile-repos {
+    margin: 30px auto;
+    background-color: #031b33;
+    border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(109, 42, 42, 0.1);
+    background-color: #f0f4f8;
+    border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+.profile-repo-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+  
+}
+
+.profile-repos h2{
+ margin: 20px;
+ text-align: left;
+ color: #77828c;
+}
+
+.profile-repo-item {
+  background-color: rgb(89, 79, 116);
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.profile-repo-item:hover{
+    background-color:rgb(142, 135, 160); 
+    box-shadow:0 2px 4px rgba(0, 0, 0, 0.7); ;
+}
+
+.repo-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #c4c7c9;
+}
+
+.repo-id {
+  color: #b6a3a3;
+  font-size: 0.9rem;
+}
+
+/* Edit profile */
+.edit-profile{
+    text-align: left;
+    padding:5px;
+    border:1px solid #031b33;
+    cursor : pointer;
+    background-color: #77828c;
+    border-radius: 5px;
+    color: #f9f9f9;
+}
+
+.edit-profile:hover{
+    background-color: #031b33;
+    color: #b6a3a3;
+}
+.profile-info{
+    margin-top: 30px;
+    background-color: #eef;
+    padding: 20px;
+    border-radius: 8px;
+    
+}

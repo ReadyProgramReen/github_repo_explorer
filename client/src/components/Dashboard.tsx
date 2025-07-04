@@ -1,28 +1,19 @@
 import {useEffect,useState} from 'react'
 import './Dashboard.css'
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
+import type { Favorite} from '../types/types.ts';
 
 
 export default function Dashboard() {
 
 // define the shape of the favorite object 
-interface Favorite{
-    id: string,
-    repoId: string,
-    repoName: string,
-    userId: number,
-    createdAt : string,
-}
+
 
     const [favorites, setFavorites] = useState<Favorite[]>([])
 
     //assess the user data 
     const user = JSON.parse(localStorage.getItem("user") || "{}");
 
-    //access navigator
-    const navigate = useNavigate();
 
 
     //fetched faviorites  
@@ -81,12 +72,6 @@ interface Favorite{
 };
 
 
-    //log the user out by clearing local storage 
-    const handleLogout = ()=>{
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        navigate("/login");
-    }
 
   return (
     <div>
