@@ -13,9 +13,11 @@ export default function Dashboard() {
     const [searchTerm, setSearchTerm] = useState("");
     //store the list of github repo we get back from the db
     const [repos, setRepo] = useState([]);
+    //repo page tracker 
+    const [currentPage, setCurrentPage] = useState(1);
+    const repoPerPage = 5;
 
     //fetch repo from github api 
-
     const handleSearch = async()=>{
       console.log("clicked to search")
       //MAKE sure the user is not earching an empty field
@@ -132,17 +134,29 @@ export default function Dashboard() {
         </form>
 
         {/* display the list of the searched user repo */}
-        <ul>
-          {repos.map((repo:any)=>(
-            <li key={repo.id}>
+          {repos.slice((currentPage - 1)* repoPerPage, currentPage * repoPerPage)
+          .map((repo:any)=>(
+            <div key={repo.id}>
               <h3>{repo.name}</h3>
-              <p>{repo.description|| "No description avaiable"}</p>
-              <p>Link: {repo.html_url} </p>
-
-            </li>
+              <a href={repo.html_url} target='_blank' rel="noopener noreferrer">View on GitHub </a>
+              <button onClick={()=>handleAddToFavorites(repo)}>Add to Favorites</button>
+            </div>
 
           ))}
-        </ul>
+        
+        {/* pagination page control   */}
+        <div className='pagination-controls'>
+          <button onClick={()=>setCurrentPage((prev)=>Math.max(prev-1,1))}
+            disabled = {currentPage === 1}
+            >Previous</button>
+            <span>Page {currentPage}</span>
+            <button onClick = {()=>setCurrentPage((prev)=> prev < Math.ceil(repos.length /repoPerPage)? prev+1: prev)}
+            disabled ={currentPage === Math.ceil(repos.length/repoPerPage)}
+            >
+              Next
+            </button>
+
+        </div>
 
 
         {/* //display faviorites repos */}
