@@ -91,7 +91,6 @@
 .edit-profile{
     text-align: left;
     padding:5px;
-    border:1px solid #031b33;
     cursor : pointer;
     background-color: #77828c;
     border-radius: 5px;
@@ -107,5 +106,5 @@
     background-color: #eef;
     padding: 20px;
     border-radius: 8px;
-    
+
 }
