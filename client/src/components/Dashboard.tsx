@@ -102,6 +102,57 @@ export default function Dashboard() {
   }
 };
 
+  //add a new favorite repo from search github api results
+  const handleAddToFavorites = async(repo:any)=>{
+    try {
+      //get access to token
+      const token = localStorage.getItem("token");
+
+      //if token doesnt exist , throw error
+      if(!token){
+        console.error("No token fount, User might not be logged in .")
+        return;
+      }
+      
+      //POST req " add new fav"
+      const response = await fetch("http://localhost:9000/favorite",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : `Bearer ${token}` ,
+        },
+        body:JSON.stringify({
+          repoId: repo.full_name,
+          repoName : repo.name,
+        })
+      })
+
+      //check if data was ok in http object
+      if(!response.ok){
+        throw new Error("Failed to add favorite");
+      }
+
+      //log successful add
+      console.log("Favorite added successfully");
+      
+      
+    } catch (error) {
+      console.error("Error adding favorite:", error)
+      
+    }
+    //store the new fav in object
+    const newFavorite = {
+      repoId: repo.full_name,
+      repoName: repo.name,
+      id: crypto.randomUUID(),
+      userId: user?.id,         
+      createdAt: new Date().toISOString()
+    }
+
+    setFavorites((prev)=>[newFavorite,...prev])
+
+  }
+
 
 
   return (
