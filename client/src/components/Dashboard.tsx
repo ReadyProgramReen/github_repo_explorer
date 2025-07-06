@@ -11,11 +11,19 @@ export default function Dashboard() {
     const [favorites, setFavorites] = useState<Favorite[]>([])
     //search Github username input
     const [searchTerm, setSearchTerm] = useState("");
+    //Track loading state
+    const [loading, setLoading] = useState(false)
     //store the list of github repo we get back from the db
     const [repos, setRepo] = useState([]);
-    //repo page tracker 
+    //search repo page tracker for pagination
     const [currentPage, setCurrentPage] = useState(1);
     const repoPerPage = 5;
+    //favorite repo page tracker for pagimation
+    const [favoriteCurrentPage, setFavoriteCurrentPage]= useState(1);
+    const favoritesPerPage  = 5
+    //UI message 
+    const [feedbackMessage, setFeedbackMessage] = useState("")
+
 
     //fetch repo from github api 
     const handleSearch = async()=>{
@@ -114,6 +122,19 @@ export default function Dashboard() {
         return;
       }
       
+      //chekc if repo already exits in favorite db 
+      const alreadyAdded = favorites.some(fav=>(
+        fav.repoId === repo.full_name
+      ));
+
+      //log that the repo already exist in favorites
+      if(alreadyAdded){
+        console.log("This repository is already in your favorites");
+        return ;
+      }
+
+      //turn loading tracker on so user knows to wait for data
+      setLoading(true);
       //POST req " add new fav"
       const response = await fetch("http://localhost:9000/favorite",{
         method: "POST",
@@ -127,6 +148,9 @@ export default function Dashboard() {
         })
       })
 
+      //toggle loading status off since fetch is completed (either with an error or a successful)
+      setLoading(false)
+
       //check if data was ok in http object
       if(!response.ok){
         throw new Error("Failed to add favorite");
@@ -134,10 +158,15 @@ export default function Dashboard() {
 
       //log successful add
       console.log("Favorite added successfully");
-      
+      setFeedbackMessage("Favorite Added Successfully")
+      setTimeout(() => setFeedbackMessage(""), 3000);
+
       
     } catch (error) {
       console.error("Error adding favorite:", error)
+      setFeedbackMessage("Failed to add repository")
+      setTimeout(() => setFeedbackMessage(""), 3000);
+
       
     }
     //store the new fav in object
@@ -150,6 +179,11 @@ export default function Dashboard() {
     }
 
     setFavorites((prev)=>[newFavorite,...prev])
+
+    //clear the list of repo that is displayed in the ui
+    setRepo([]);
+
+ 
 
   }
 
@@ -184,6 +218,9 @@ export default function Dashboard() {
           </button >
         </form>
 
+        {/*Show loding message then show the Feedback message */}
+{loading ? <p>Loading.....</p> :  feedbackMessage && <p className="feedback-message">{feedbackMessage}</p>}
+
         {/* display the list of the searched user repo */}
           {repos.slice((currentPage - 1)* repoPerPage, currentPage * repoPerPage)
           .map((repo:any)=>(
@@ -195,7 +232,7 @@ export default function Dashboard() {
 
           ))}
         
-        {/* pagination page control   */}
+        {/* pagination page control  for searches*/}
         <div className='pagination-controls'>
           <button onClick={()=>setCurrentPage((prev)=>Math.max(prev-1,1))}
             disabled = {currentPage === 1}
@@ -217,8 +254,11 @@ export default function Dashboard() {
         {favorites.length === 0 ? (
         <p>You have no favorites saved yet.</p>
         ) : (
+
+    <>
        <ul className='repo-list'>
-    {favorites.map((repo: any) => (
+    {favorites.slice((favoriteCurrentPage-1)* favoritesPerPage,favoriteCurrentPage * favoritesPerPage )
+    .map((repo: any) => (
     <li key={repo.id} className="repo-item">
       <div>
         <p className="repo-name">{repo.repoName}</p>
@@ -234,7 +274,23 @@ export default function Dashboard() {
   ))}
 </ul>
 
+        {/* pagination page control  for favorites*/}
+        <div className='pagination-controls'>
+          <button onClick={()=>setFavoriteCurrentPage((prev)=>Math.max(prev-1,1))}
+            disabled = {favoriteCurrentPage === 1}
+            >Previous</button>
+            <span>Page {favoriteCurrentPage}</span>
+            <button onClick = {()=>setFavoriteCurrentPage((prev)=> prev < Math.ceil(repos.length /repoPerPage)? prev+1: prev)}
+            disabled ={favoriteCurrentPage === Math.ceil(repos.length/repoPerPage)}
+            >
+              Next
+            </button>
+
+        </div>
+</>
+
   )}
+
       </div>
 
 
