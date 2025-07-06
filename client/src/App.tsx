@@ -2,10 +2,10 @@ import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
 import Dashboard from './components/Dashboard';
 import './App.css'
-// import { useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Profile from './components/Profile';
-
+import NotFound from './pages/NotFound';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
 
@@ -19,8 +19,13 @@ function App() {
         <Route path= "/" element={<Navigate to ="/login"/>}/>
         <Route path="/login" element={<LoginForm/>}/>
         <Route path="/register" element={<RegisterForm/>}/>
-        <Route path="/dashboard" element={<Dashboard/>}/>
-        <Route path="/profile" element={<Profile/>}/>
+
+      {/* Protected Routes */}
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard/></ProtectedRoute> }/>
+        <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute> }/>
+       
+        {/* Catch-all for 404 */}
+        <Route path="*" element={<NotFound/>}/>
 
 
       </Routes>
