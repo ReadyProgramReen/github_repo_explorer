@@ -8,11 +8,11 @@ const prisma = new  PrismaClient();
 export const registerAuth:RequestHandler = async(req:any, res:any)=>{
     
       // get the email, password from the request body
-      const { email, password } = req.body;
+      const { email, password,username } = req.body;
     
       //check if email and pass are empty
-      if (!email || !password) {
-       return  res.status(400).json({ error: "Please provide both email and password" });
+      if (!email ||!username ||!password) {
+       return  res.status(400).json({ error: "Please provide both email, username and password" });
       }
     
       try {
@@ -34,6 +34,7 @@ export const registerAuth:RequestHandler = async(req:any, res:any)=>{
         const newUser = await prisma.user.create({
           data: {
             email,
+            username,
             password: hashPassword
           },
         });
@@ -41,7 +42,7 @@ export const registerAuth:RequestHandler = async(req:any, res:any)=>{
         //inform the client side that new user was successfully created and sent user email
         return res.status(201).json({
           message: "User registered successfully",
-          user: { id: newUser.id, email: newUser.email }
+          user: { id: newUser.id,username: newUser.username, email: newUser.email }
         });
     
         //catch the error

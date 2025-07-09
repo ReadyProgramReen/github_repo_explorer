@@ -6,7 +6,8 @@ import "./RegisterForm.css"
 
 export default function RegisterForm(){
 
-    //email and password state 
+    //username, email and password state 
+    const [username, setUsername] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
@@ -26,7 +27,7 @@ export default function RegisterForm(){
             headers:{
                 "content-Type" : "application/json"
             },
-            body: JSON.stringify({email,password})
+            body: JSON.stringify({email,username,password,})
          });
          //parse through the response
          const data = await response.json();
@@ -34,6 +35,7 @@ export default function RegisterForm(){
          //Reset the email and password field
          setEmail('');
          setPassword('');
+         setUsername('');
          
          //check if the response is not ok (a http built in property )
          if(!response.ok){
@@ -59,6 +61,15 @@ export default function RegisterForm(){
     return(
         <form onSubmit={handleSubmit} className="register-form-container" action="">
             <h2>Registration</h2>
+
+               {/* //username input field */}
+            <input 
+            type="username"
+            value={username}
+            onChange={(e)=>setUsername(e.target.value)}
+            placeholder="Username"
+            required
+             />
 
             {/* //email input field */}
             <input 

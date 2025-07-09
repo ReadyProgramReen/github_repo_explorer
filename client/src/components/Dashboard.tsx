@@ -22,12 +22,11 @@ export default function Dashboard() {
     const [favoriteCurrentPage, setFavoriteCurrentPage]= useState(1);
     const favoritesPerPage  = 5
     //UI message 
-    const [feedbackMessage, setFeedbackMessage] = useState("")
+    const [feedbackMessage, setFeedbackMessage] = useState("");
 
 
     //fetch repo from github api 
     const handleSearch = async()=>{
-      console.log("clicked to search")
       //MAKE sure the user is not earching an empty field
       if(!searchTerm.trim()) return;
 
@@ -43,7 +42,7 @@ export default function Dashboard() {
         const data = await response.json();
         //set the data in the repo state 
         setRepo(data);
-        console.log("repo data:",repos)
+        // console.log("repo data:",repos)
         
         //catch errors
       } catch (error) {
@@ -75,7 +74,7 @@ export default function Dashboard() {
             
                 const data = await response.json();
                 setFavorites(data.favorites);
-                console.log("data:",data);
+                // console.log("data:",data);
 
             } catch (error) {
                 console.error("Failed to fetch favorites:", error);
@@ -112,13 +111,14 @@ export default function Dashboard() {
 
   //add a new favorite repo from search github api results
   const handleAddToFavorites = async(repo:any)=>{
+    
     try {
       //get access to token
       const token = localStorage.getItem("token");
 
       //if token doesnt exist , throw error
       if(!token){
-        console.error("No token fount, User might not be logged in .")
+        console.error("No token found, User might not be logged in .")
         return;
       }
       
@@ -145,6 +145,7 @@ export default function Dashboard() {
         body:JSON.stringify({
           repoId: repo.full_name,
           repoName : repo.name,
+          htmlUrl:repo.html_url,
         })
       })
 
@@ -156,23 +157,11 @@ export default function Dashboard() {
         throw new Error("Failed to add favorite");
       }
 
-      //log successful add
-      console.log("Favorite added successfully");
-      setFeedbackMessage("Favorite Added Successfully")
-      setTimeout(() => setFeedbackMessage(""), 3000);
-
-      
-    } catch (error) {
-      console.error("Error adding favorite:", error)
-      setFeedbackMessage("Failed to add repository")
-      setTimeout(() => setFeedbackMessage(""), 3000);
-
-      
-    }
-    //store the new fav in object
+       //store the new fav in object
     const newFavorite = {
       repoId: repo.full_name,
       repoName: repo.name,
+      htmlUrl:repo.html_url,
       id: crypto.randomUUID(),
       userId: user?.id,         
       createdAt: new Date().toISOString()
@@ -180,10 +169,26 @@ export default function Dashboard() {
 
     setFavorites((prev)=>[newFavorite,...prev])
 
+
     //clear the list of repo that is displayed in the ui
     setRepo([]);
 
- 
+    
+      //log successful add
+      console.log("Favorite added successfully:",newFavorite,);
+      setFeedbackMessage("Favorite Added Successfully")
+      setTimeout(() => setFeedbackMessage(""), 3000);
+
+
+     
+      
+    } catch (error) {
+      console.error("Error adding favorite:", error)
+      setFeedbackMessage("Failed to add repository")
+      setTimeout(() => setFeedbackMessage(""), 3000);
+
+      
+    } 
 
   }
 
@@ -199,9 +204,7 @@ export default function Dashboard() {
         <div className="dashboard-header">
             <h1 className="dashboard-title">Dashboard</h1>
             <p className="dashboard-subtitle">Welcome to your GitHub Repo Explorer dashboard</p>
-            <p className="dashboard-welcome">
-            Welcome back{user.email ? `, ${user.email.split("@")[0]}` : ""}
-            </p>
+            
         </div>
 
         {/* Github search form */}
@@ -232,7 +235,8 @@ export default function Dashboard() {
 
           ))}
         
-        {/* pagination page control  for searches*/}
+        {/* pagination page control for search*/}
+        {repos.length>0 &&
         <div className='pagination-controls'>
           <button onClick={()=>setCurrentPage((prev)=>Math.max(prev-1,1))}
             disabled = {currentPage === 1}
@@ -245,7 +249,7 @@ export default function Dashboard() {
             </button>
 
         </div>
-
+        }
 
         {/* //display faviorites repos */}
       <div className='my-fav-repos'>
@@ -260,9 +264,13 @@ export default function Dashboard() {
     {favorites.slice((favoriteCurrentPage-1)* favoritesPerPage,favoriteCurrentPage * favoritesPerPage )
     .map((repo: any) => (
     <li key={repo.id} className="repo-item">
-      <div>
+      <div><a href={repo.htmlUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        >
         <p className="repo-name">{repo.repoName}</p>
         <p className="repo-id">{repo.repoId}</p>
+        </a>
       </div>
       <button
         className="delete-button"
@@ -275,18 +283,20 @@ export default function Dashboard() {
 </ul>
 
         {/* pagination page control  for favorites*/}
+      {favorites.length > 5 &&
         <div className='pagination-controls'>
           <button onClick={()=>setFavoriteCurrentPage((prev)=>Math.max(prev-1,1))}
             disabled = {favoriteCurrentPage === 1}
             >Previous</button>
             <span>Page {favoriteCurrentPage}</span>
-            <button onClick = {()=>setFavoriteCurrentPage((prev)=> prev < Math.ceil(repos.length /repoPerPage)? prev+1: prev)}
-            disabled ={favoriteCurrentPage === Math.ceil(repos.length/repoPerPage)}
+            <button onClick = {()=>setFavoriteCurrentPage((prev)=> prev < Math.ceil(favorites.length /favoritesPerPage)? prev+1: prev)}
+            disabled ={favoriteCurrentPage === Math.ceil(favorites.length/favoritesPerPage)}
             >
               Next
             </button>
 
         </div>
+      }  
 </>
 
   )}

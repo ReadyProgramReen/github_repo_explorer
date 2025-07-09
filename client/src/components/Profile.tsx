@@ -6,11 +6,12 @@ import type { Favorite} from '../types/types.ts';
 
 export default function Profile() {
     
-    const [user,setUser]= useState<{email:string,id:number}|null>(null)
+    const [user,setUser]= useState<{email:string,username:string,id:number}|null>(null)
     const [faviorites, setFavorites]= useState<Favorite[]>([])
 //placeholder logic for editing user info 
     const [editProfile, setEditProfile]= useState(false)
 
+    console.log(user)
     //get user from local storage and store it in user state 
     useEffect(()=>{
         //get user email annd id from local storage 
@@ -60,7 +61,8 @@ export default function Profile() {
     <div className="profile-container">
         <div className="profile-header">
             <div className="profile-text">
-                <h1>{user && user.email?`Welcome back, ${user.email.split("@")[0]}`: "Welcome back! "}</h1>
+                {/* <h1>{user && user.email?`Welcome back, ${user.email.split("@")[0]}`: "Welcome back! "}</h1> */}
+                <h1>{user && user.username?`Welcome back, ${user.username}`: `Welcome back!`}</h1>
                 <p>Your email: {user &&  user.email}</p>
             </div>
 
@@ -96,7 +98,15 @@ export default function Profile() {
                     {faviorites.map((repo:any)=>(
                         <li key={repo.id} className="profile-repo-item">
                             <p className="repo-name">{repo.repoName}</p>
-                            <p className="repo-id">{repo.repoId}</p>
+                            {/* <p className="repo-id">{repo.repoId}</p> */}
+                              <a
+                                href={repo.htmlUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="dashboard-repo-link"
+                                >
+                                View on GitHub
+                                </a>
 
                         </li>
                     )).splice(0,5)}

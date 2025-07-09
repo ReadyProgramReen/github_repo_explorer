@@ -46,7 +46,8 @@ if(!comparePassword){
 
 //once email is confirmed and password is verified create web token
 const token = jwt.sign(
-    {userId: existingUser!.id},
+    {userId: existingUser!.id
+    },
     process.env.JWT_SECRET as string,
     {expiresIn: "1d"}
 )
@@ -56,7 +57,9 @@ return res.status(200).json({
   token,
   user: {
     id: existingUser!.id,
-    email: existingUser!.email
+    email: existingUser!.email,
+    username:existingUser.username
+
   }
 });
 

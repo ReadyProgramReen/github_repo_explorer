@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 export const profileRoutes = Router()
 
 
-//Get profile to get all user data from db 
+//Request profile to get all user data from db 
 profileRoutes.get("/", authenticationToken,async (req:any,res:any)=>{
     try {
         //get userid from the request from the decoded in authToken
@@ -16,7 +16,7 @@ profileRoutes.get("/", authenticationToken,async (req:any,res:any)=>{
         //find the user data in the db with the userId
         const user = await prisma.user.findUnique({
             where: {id : userId},
-            select : {id:true,email:true,createdAt:true}
+            select : {id:true,email:true,username:true,createdAt:true}
         });
 
         // check if no user is found

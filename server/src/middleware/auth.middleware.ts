@@ -28,7 +28,7 @@ export function authenticationToken(req:AuthRequest,res:Response,next:NextFuncti
          req.user = decoded ;
             
           //call next to run the next route
-         next() ;
+         next();
             
     } catch (error) {
      //catch any error respond 

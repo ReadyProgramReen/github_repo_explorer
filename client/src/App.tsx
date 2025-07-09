@@ -9,7 +9,6 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
 
-// const [showLogin,setShowLogin] = useState(true);
 
   return (
     <div className='app-container'>

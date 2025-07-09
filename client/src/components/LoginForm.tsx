@@ -40,7 +40,7 @@ export default function  LoginForm() {
      localStorage.setItem("user",JSON.stringify(data.user));
 
      //redirect to the dashboard 
-     navigate("/dashboard")
+     navigate("/profile")
 
     }else{
         //check if the login was no successful/check if the login was successful

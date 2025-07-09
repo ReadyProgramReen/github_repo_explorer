@@ -5,46 +5,19 @@ import {PrismaClient} from "../generated/prisma";
 const prisma = new PrismaClient();
 export const favRouter = Router();
 
-favRouter.post('/',authenticationToken,async(req:any,res:any)=>{
-    const {repoId,repoName} = req.body;
 
-    //Check if repo id and repo name are both included 
-    if(!repoId || !repoName){
-        return res.status(400).json({error:"Repository ID and name are both required"})
-    }
 
-    try {
-        //add the faviorite to the db 
-        const newFaviorite = await prisma.favorite.create({
-           data: {
-            repoId,
-            repoName,
-            userId: req.user.userId,
-      }, 
-        });
-        //respond to client  with a status and mesaage and new db
-        return res.status(201).json({
-            message:"Repository favorited successfully",
-            favorite: newFaviorite,
-        })
-        
-    } catch (error) {
-         console.error("Favorite error:", error);
-        return res.status(500).json({ error: "Something went wrong. Try again." });
-    }
-});
-
-// Create a new favorite entry 
-favRouter.post("/add", authenticationToken, async (req: any, res: any) => {
+// Add a new favorite to db 
+favRouter.post("/", authenticationToken, async (req: any, res: any) => {
   // Extract repoId and repoName from the request body
-  const { repoId, repoName } = req.body;
+  const { repoId, repoName, htmlUrl } = req.body;
 
   // Extract userId from the decoded token payload
   const userId = req.user.userId;
 
   //  Validate input
   if (!repoId || !repoName) {
-    return res.status(400).json({ error: "repoId and repoName are required" });
+    return res.status(400).json({ error: "Repository ID and name are both required" });
   }
 
   try {
@@ -60,16 +33,19 @@ favRouter.post("/add", authenticationToken, async (req: any, res: any) => {
       return res.status(409).json({ error: "Repository already favorited." });
     }
 
-    // Create new favorite
+    // add the faviorite to the db 
     const newFavorite = await prisma.favorite.create({
       data: {
         repoId,
         repoName,
+        htmlUrl,
+        // userId: req.user.userId,
         user: { connect: { id: userId } },
       },
     });
 
     return res.status(201).json({ message: "Favorite added!", favorite: newFavorite });
+  
   } catch (error) {
     console.error("Error adding favorite:", error);
     return res.status(500).json({ error: "Internal server error" });

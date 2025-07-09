@@ -20,6 +20,7 @@ model User {
   id       Int      @id @default(autoincrement())
   email    String   @unique
   password String
+  username String?
   createdAt DateTime @default(now())
   favorites Favorite[]
 
@@ -31,6 +32,7 @@ model Favorite {
   id        String   @id @default(uuid())
   repoId    String   // GitHub repo ID or full name (e.g. owner/repo)
   repoName  String
+  htmlUrl   String?
   userId    Int                     
   user      User    @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
