@@ -1,4 +1,4 @@
-.app-container{
+.app-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -6,20 +6,19 @@
   min-height: 100vh;
   padding: 1rem;
   background-color: rgb(240, 232, 239);
-
 }
 
 /* toggle button */
-.login-link-button{
+.login-link-button {
   background: none;
   border: none;
   color: #2563eb;
   text-decoration: underline;
   cursor: pointer;
   font-size: 1rem;
-  margin-top:1rem;
+  margin-top: 1rem;
 }
 
-.login-link-button:hover{
-  color: #1e40af
+.login-link-button:hover {
+  color: #1e40af;
 }

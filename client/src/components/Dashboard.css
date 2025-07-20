@@ -1,12 +1,12 @@
-.dashboard-container{
-    min-width: 600px;
-     height: 100vh;
-    margin: 0.5rem auto;
-    padding: 1.5rem;
-    background-color: #f0f4f8;
-    border-radius: 8px;
-    box-shadow:0 2px 4px rgba(0,0,0,0.1);
-    text-align: center;
+.dashboard-container {
+  min-width: 600px;
+  height: 100vh;
+  margin: 0.5rem auto;
+  padding: 1.5rem;
+  background-color: #f0f4f8;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .dashboard-header {
@@ -32,35 +32,31 @@
   color: #333;
 }
 
-.my-fav-repos h2{
-text-align: left;
-color:#77828c ;
+.my-fav-repos h2 {
+  text-align: left;
+  color: #77828c;
 }
 
 /* search */
-.search-form{
+.search-form {
   margin-bottom: 30px;
-  
 }
-.search-input{
+.search-input {
   padding: 8px;
   border-radius: 10px 0 0 10px;
-  
 }
 
-.search-button{
+.search-button {
   padding: 8px;
-  border-radius:0 10px 10px 0;
+  border-radius: 0 10px 10px 0;
   cursor: pointer;
-
 }
-.search-button:hover{
-    background-color:rgb(160, 149, 135); 
-    box-shadow:0 2px 4px rgba(0, 0, 0, 0.7); 
+.search-button:hover {
+  background-color: rgb(160, 149, 135);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 /* Repo List Styles */
-
 
 .repo-list {
   list-style: none;
