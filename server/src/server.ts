@@ -8,7 +8,7 @@ const app = express();
 
 // routes
 import { authRouter } from "./routes/authRoutes";
-import { profileRoutes } from "../src/routes/profile.routes";
+import { profileRoutes } from './routes/profileRoutes';
 import { favRouter } from "./routes/favoriteRoutes";
 import { githubRouter } from "./routes/githubRoutes";
 
